@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.python-version
+
+# Virtual environment (uv)
+.venv/
+.env/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Data folders
+data/raw/
+data/processed/
+
+# Model artifacts
+models/
+
+# Results / outputs
+results/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
