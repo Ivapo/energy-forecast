@@ -13,5 +13,6 @@ dependencies = [
     "prophet",
     "fastapi",
     "uvicorn",
-    "requests"
+    "requests",
+    "jupyter"
 ]

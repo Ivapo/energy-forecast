@@ -1,6 +1,6 @@
 # ⚡ Energy Forecasting Project
 
-This project showcases **data science and time series forecasting skills** using open electricity load data for Sweden. It demonstrates a full workflow from data acquisition to forecasting, organized code, and optional deployment.
+This project showcases **data science and time series forecasting skills** using `Open Power System Data`. It demonstrates a full workflow from data acquisition to forecasting, organized code, and deployment.
 
 ---
 
@@ -9,14 +9,57 @@ This project showcases **data science and time series forecasting skills** using
 - **Goal:** Forecast short-term electricity demand (hourly) in Sweden.  
 - **Purpose:** Accurate demand forecasting helps energy providers balance the grid, optimize renewable integration, and support decision-making.  
 - **Dataset:** Open Power System Data — Hourly electricity load, wind and solar generation, and related variables.  
-- **Scope:** Includes scripts for downloading data, preprocessing, feature engineering, model training, and visualization.  
+- **Scope:** Includes scripts for downloading data, preprocessing, feature engineering, model training, and visualization.
+
+---
+
+## 🧩 Purpose 
+
+The goal of the `energy-forecast` project is to **forecast short-term (hourly) electricity demand in Sweden** using historical time series data from Open Power System Data.
+
+### Objectives
+- **Load and preprocess** hourly electricity load, wind and solar generation, and related variables.
+- **Explore and visualize** patterns, trends, and missing values.
+- **Engineer features** suitable for forecasting, including lag features, rolling averages, and time-based features.
+- **Build forecasting models** using tools like Prophet or scikit-learn regressors.
+- **Generate predictions** and visualize results.
+- **(Optional) Deploy a minimal API** using FastAPI to serve forecasts.
+
+### Motivation
+Accurate demand forecasting helps energy providers:
+- Balance the electricity grid
+- Optimize renewable energy integration
+- Support operational and strategic decision-making
+
+This project demonstrates **end-to-end data science skills**: 
+
+> **Data acquisition & preprocessing → EDA → Feature engineering → Modeling → Deployment**
+
+### Data Preprocessing
+
+
+```bash
+    uv run python -m src.energy_forecast.data
+```
+
+The preprocessing pipeline (in `src/energy_forecast/data.py`) saves cleaned data to `data/processed/sweden_processed_hourly.csv`:
+- selection of columns for Sweden : actual energy load (`SE_load_actual_entsoe_transparency`) and forecasted load for benchmarking (`SE_load_forecast_entsoe_transparency`)
+- parsing `utc_timestamp` column and setting as datetime index
+- removal of duplicate timestamps
+- reindexing to a complete hourly range (if any timestamps missing)
+- forward-fill then backward-fill for missing values
+- simple invalid-value handling (non-positive loads)
+- rolling-window outlier detection and capping (centered window, 12 hour window, threshold of 3 std)
+- saves dataframe to `sweden_processed_hourly.csv`
+
+
 
 ## ⚙️ Project Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/energy-forecast.git
+git clone https://github.com/ivapo/energy-forecast.git
 cd energy-forecast
 ```
 
@@ -31,9 +74,10 @@ uv init
 
 ```bash
 uv sync
+uv run python -m ipykernel install --user --name=energy-forecast --display-name "Python (energy-forecast)"
 ```
 
-* Installs all dependencies
+* Installs all dependencies and creates the kernel for the notebooks.
 
 ## 📥 Download Dataset
 
@@ -41,10 +85,10 @@ The project uses the **Open Power System Data** CSV.
 Download it running:
 
 ```bash
-uv run python src/energy_forecast/download_data.py
+uv run python -m src.energy_forecast.download_data
 ```
 
-* The data will be downloaded, avoiding duplication, to: `data/raw/time_series_60min_singleindex.csv`
+* The data will be downloaded to: `data/raw/time_series_60min_singleindex.csv`
 
 
 ## 🗂 Project Structure
