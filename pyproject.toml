@@ -14,5 +14,6 @@ dependencies = [
     "fastapi",
     "uvicorn",
     "requests",
-    "jupyter"
+    "jupyter",
+    "statsmodels>=0.14.5",
 ]

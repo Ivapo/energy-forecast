@@ -35,11 +35,24 @@ This project demonstrates **end-to-end data science skills**:
 
 > **Data acquisition & preprocessing → EDA → Feature engineering → Modeling → Deployment**
 
-### Data Preprocessing
+## ⚙️ Workflow
+
+### Download Dataset
+
+The project uses the **Open Power System Data** CSV. 
+Download it by running:
+
+```bash
+uv run python -m src.energy_forecast.download_data
+```
+
+* The csv file will be downloaded to: `data/raw/time_series_60min_singleindex.csv`
+
+### Preprocess Data
 
 
 ```bash
-    uv run python -m src.energy_forecast.data
+uv run python -m src.energy_forecast.data
 ```
 
 The preprocessing pipeline (in `src/energy_forecast/data.py`) saves cleaned data to `data/processed/sweden_processed_hourly.csv`:
@@ -79,16 +92,7 @@ uv run python -m ipykernel install --user --name=energy-forecast --display-name 
 
 * Installs all dependencies and creates the kernel for the notebooks.
 
-## 📥 Download Dataset
 
-The project uses the **Open Power System Data** CSV. 
-Download it running:
-
-```bash
-uv run python -m src.energy_forecast.download_data
-```
-
-* The data will be downloaded to: `data/raw/time_series_60min_singleindex.csv`
 
 
 ## 🗂 Project Structure
@@ -99,6 +103,7 @@ energy-forecast/
 │   ├── raw/           # Original CSV downloaded by script
 │   └── processed/     # Preprocessed data for modeling
 ├── notebooks/
+│   ├── 00_data_preprocessing.ipynb
 │   ├── 01_data_exploration.ipynb
 │   └── 02_feature_engineering_and_modeling.ipynb
 ├── src/
@@ -175,7 +180,7 @@ docker run -p 8000:8000 energy-forecast
 
 ## 📄 References
 
-- [Open Power System Data](https://data.open-power-system-data.org/)  
+- [Open Power System Data](https://data.open-power-system-data.org/time_series/)  
 
 
 
