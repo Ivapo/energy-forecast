@@ -1,6 +1,8 @@
 # ⚡ Energy Forecasting Project
 
-This project showcases **data science and time series forecasting skills** using `Open Power System Data`. It demonstrates a full workflow from data acquisition to forecasting, organized code, and deployment.
+
+This project showcases **data science and time series forecasting skills** using `Open Power System Data`. 
+It demonstrates a full workflow from data acquisition to forecasting, organized code, and deployment.
 
 ---
 
@@ -37,63 +39,54 @@ This project demonstrates **end-to-end data science skills**:
 
 ## ⚙️ Workflow
 
-### Download Dataset
+### Dataset : Open Power System Data - [<u>data.open-power-system-data.org</u>](https://data.open-power-system-data.org/time_series/)  
 
-The project uses the **Open Power System Data** CSV. 
-Download it by running:
+Download the data by running:
 
-```bash
+```
 uv run python -m src.energy_forecast.download_data
 ```
 
-* The csv file will be downloaded to: `data/raw/time_series_60min_singleindex.csv`
+Data is downloaded to: `data/raw/time_series_60min_singleindex.csv`
 
 ### Preprocess Data
 
 
-```bash
+```
 uv run python -m src.energy_forecast.data
 ```
 
-The preprocessing pipeline (in `src/energy_forecast/data.py`) saves cleaned data to `data/processed/sweden_processed_hourly.csv`:
+This runs `src/energy_forecast/data.py` which preprocess the  `time_series_60min_singleindex.csv` file and saves cleaned data to: `data/processed/sweden_processed_hourly.csv`
 - selection of columns for Sweden : actual energy load (`SE_load_actual_entsoe_transparency`) and forecasted load for benchmarking (`SE_load_forecast_entsoe_transparency`)
 - parsing `utc_timestamp` column and setting as datetime index
+- invalid-value handling (non-positive loads)
 - removal of duplicate timestamps
 - reindexing to a complete hourly range (if any timestamps missing)
 - forward-fill then backward-fill for missing values
-- simple invalid-value handling (non-positive loads)
 - rolling-window outlier detection and capping (centered window, 12 hour window, threshold of 3 std)
-- saves dataframe to `sweden_processed_hourly.csv`
+- saves preprocessed data to `data/processed/sweden_processed_hourly.csv`
 
-
+### Exploratory Data Analysis
 
 ## ⚙️ Project Setup
 
-### 1. Clone the repository
+### 1. Clone repository
 
 ```bash
 git clone https://github.com/ivapo/energy-forecast.git
 cd energy-forecast
 ```
 
-### 2. Initialize UV environment
+### 2. Setup UV environment
+
+* Create virtual environment and install dependencies
+* Create kernel for notebooks `Python (energy-forecast)`
 
 ```bash
 uv init
-```
-* Creates an isolated virtual environment and `pyproject.toml`
-
-### 3. Install dependencies
-
-```bash
 uv sync
 uv run python -m ipykernel install --user --name=energy-forecast --display-name "Python (energy-forecast)"
 ```
-
-* Installs all dependencies and creates the kernel for the notebooks.
-
-
-
 
 ## 🗂 Project Structure
 
@@ -101,7 +94,7 @@ uv run python -m ipykernel install --user --name=energy-forecast --display-name 
 energy-forecast/
 ├── data/
 │   ├── raw/           # Original CSV downloaded by script
-│   └── processed/     # Preprocessed data for modeling
+│   └── processed/     
 ├── notebooks/
 │   ├── 00_data_preprocessing.ipynb
 │   ├── 01_data_exploration.ipynb
