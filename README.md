@@ -51,22 +51,24 @@ Data is downloaded to: `data/raw/time_series_60min_singleindex.csv`
 
 ### Preprocess Data
 
-
 ```
 uv run python -m src.energy_forecast.data
 ```
 
 This runs `src/energy_forecast/data.py` which preprocess the  `time_series_60min_singleindex.csv` file and saves cleaned data to: `data/processed/sweden_processed_hourly.csv`
-- selection of columns for Sweden : actual energy load (`SE_load_actual_entsoe_transparency`) and forecasted load for benchmarking (`SE_load_forecast_entsoe_transparency`)
-- parsing `utc_timestamp` column and setting as datetime index
-- invalid-value handling (non-positive loads)
-- removal of duplicate timestamps
-- reindexing to a complete hourly range (if any timestamps missing)
-- forward-fill then backward-fill for missing values
-- rolling-window outlier detection and capping (centered window, 12 hour window, threshold of 3 std)
-- saves preprocessed data to `data/processed/sweden_processed_hourly.csv`
+
+1. Selection of columns for Sweden : actual energy demand (`SE_load_actual_entsoe_transparency`) and forecasted demand for benchmarking (`SE_load_forecast_entsoe_transparency`)
+2. Parsing `utc_timestamp` column and setting as datetime index
+3. Invalid-value handling (non-positive loads)
+4. Removal of duplicate timestamps
+5. Reindexing to a complete hourly range (if any timestamps missing)
+6. Forward-fill then backward-fill for missing values
+7. Rolling-window outlier detection (outlies are not handled here) (centered window, 12 hour window, threshold of 3 std)
+8. Saves preprocessed data to `data/processed/sweden_processed_hourly.csv`
 
 ### Exploratory Data Analysis
+
+1. **Data quality assessment**: Load preprocessed data, basic data inspection (size, datatypes, statistical summary), data quality verification (time continuity).
 
 ## ⚙️ Project Setup
 

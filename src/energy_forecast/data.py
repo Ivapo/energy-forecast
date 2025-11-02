@@ -69,7 +69,7 @@ def filter_sweden_data(
     df_sweden["utc_timestamp"] = pd.to_datetime(df_sweden["utc_timestamp"])
     df_sweden = df_sweden.set_index("utc_timestamp").sort_index()
 
-    print("Preprocessing complete.")
+    print("--> Parsing complete")
     return df_sweden
 
 def clean_data(
